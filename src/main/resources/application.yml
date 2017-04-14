@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL}
+    driverClassName: org.postgresql.Driver
+    maxActive: 10
+    maxIdle: 5
+    minIdle: 2
+    initialSize: 5
+    removeAbandoned: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+---
+spring:
+  profiles: memoryDB
+  datasource:
+    url: jdbc:h2:mem:sampletest;MODE=MySQL  
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
