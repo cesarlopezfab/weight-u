@@ -11,29 +11,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value="/api/weights")
+@RequestMapping(value = "/api/weights")
 public class WeightController {
-	
+
 	private final WeightRepository repo;
 
 	@Autowired
 	WeightController(WeightRepository repo) {
 		this.repo = repo;
 	}
-	
-	@RequestMapping(method=RequestMethod.GET)
+
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Weight> references() {
 		return repo.findAll();
 	}
-	
-	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
+
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public void save(@RequestBody Weight weight) {
 		if (weight.getCreated() == null) {
 			weight.setCreated(new Date());
 		}
-		
+
 		repo.save(weight);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, consumes = "application/json")
+	public void delete(@RequestBody Weight reference) {
+		repo.delete(reference);
 	}
 
 }
